@@ -26,7 +26,10 @@ def create_app(test_config=None):
     #------ Firebase initialization -----
     app = Flask(__name__, instance_relative_config=True)
     auth = load_auth_key()
-    firebase_admin.initialize_app(auth)
+    try:
+        firebase_admin.initialize_app(auth)
+    except:
+        raise Exception("Could not initialize authorization credential!")
 
     if test_config is None:
         # load the instance config, if it exists, when not testing
